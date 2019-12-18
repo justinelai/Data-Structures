@@ -68,9 +68,11 @@ class BinarySearchTree:
     def in_order_print(self, node):
         if node is None:
             return #Error
-        node.in_order_print(node.left)
+        if node.left:
+            node.in_order_print(node.left)
         print(node.value)
-        node.in_order_print(node.right)
+        if node.right:
+            node.in_order_print(node.right)
     
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
