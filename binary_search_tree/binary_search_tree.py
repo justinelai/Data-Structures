@@ -18,15 +18,15 @@ class BinarySearchTree:
         elif self.value == None:
             return node
         elif value < self.value:
-            if self.left == None:
-                self.left = node
-            else:
+            if self.left:
                 self.left.insert(value)
-        else: #value is greater than self.value
-            if self.right == None:
-                self.right = node
             else:
+                self.left = node
+        else: #value is greater than self.value
+            if self.right:
                 self.right.insert(value)
+            else:
+                self.right = node
 
 
     # start from root and traverse - stop at first instance of a value - if we get to a node with no children, can return false.
@@ -55,10 +55,10 @@ class BinarySearchTree:
     # Call the function `cb` on the value of each node
     # You may use a recursive or iterative approach
     def for_each(self, cb):
-        if self.right:
-            self.right.for_each(cb)
         if self.left:
             self.left.for_each(cb)
+        if self.right:
+            self.right.for_each(cb)
         return cb(self.value)
 
     # DAY 2 Project -----------------------
@@ -66,8 +66,12 @@ class BinarySearchTree:
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
     def in_order_print(self, node):
-        pass
-
+        if node is None:
+            return #Error
+        node.in_order_print(node.left)
+        print(node.value)
+        node.in_order_print(node.right)
+    
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
     def bft_print(self, node):
