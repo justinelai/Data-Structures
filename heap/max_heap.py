@@ -14,9 +14,12 @@ class Heap:
         # replace root/max element with popped last element
         # with last element as new root
         # sift it down until heap eq is true
+        deleted = self.storage[0]
         last = self.storage.pop()
-        self.storage[0] = last
-        self._sift_down(0)
+        if self.get_size() >= 1:
+            self.storage[0] = last
+            self._sift_down(0)
+        return deleted
 
     def get_max(self): #a.k.a. "peek"?
         # "returns the maximum value in the heap in constant time"
@@ -27,7 +30,7 @@ class Heap:
         return len(self.storage)
 
     def _bubble_up(self, index):
-        if index == 0:
+        if index is 0:
             return
         parent = math.floor((index - 1) / 2)
         if parent <= self.get_size() - 1 and self.storage[parent] <= self.storage[index]:
@@ -43,9 +46,9 @@ class Heap:
     def _sift_down(self, index):
         child_l = 2 * index + 1
         child_r = 2 * index + 2
-        if self.storage[child_l] is not None:
+        if child_r < self.get_size():
             index_of_larger = child_l
-            if self.storage[child_r] is not None and self.storage[child_r] > self.storage[child_l]:
+            if self.storage[child_r] and self.storage[child_r] > self.storage[child_l]:
                 index_of_larger = child_r
             if self.storage[index] >= self.storage[index_of_larger]:
                 return
